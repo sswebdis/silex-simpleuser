@@ -3,8 +3,8 @@
 namespace SimpleUser;
 
 use Silex\Application;
-use Silex\ServiceProviderInterface;
-use Silex\ControllerProviderInterface;
+use Pimple\ServiceProviderInterface;
+use Pimple\ControllerProviderInterface;
 use Silex\ControllerCollection;
 use Silex\ServiceControllerResolver;
 use Symfony\Component\HttpFoundation\Request;
