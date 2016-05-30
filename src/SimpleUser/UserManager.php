@@ -325,7 +325,7 @@ class UserManager implements UserProviderInterface
     public function getCurrentUser()
     {
         if ($this->isLoggedIn()) {
-            return $this->app['security']->getToken()->getUser();
+            return $this->app['security.token_storage']->getToken()->getUser();
         }
 
         return null;
@@ -338,12 +338,12 @@ class UserManager implements UserProviderInterface
      */
     function isLoggedIn()
     {
-        $token = $this->app['security']->getToken();
+        $token = $this->app['security.token_storage']->getToken();
         if (null === $token) {
             return false;
         }
 
-        return $this->app['security']->isGranted('IS_AUTHENTICATED_REMEMBERED');
+        return $this->app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_REMEMBERED');
     }
 
     /**
@@ -469,7 +469,7 @@ class UserManager implements UserProviderInterface
             if ($key == 'customFields') {
                 continue;
             } else {
-                $sql .= ($first_crit ? 'WHERE' : 'AND') . ' ' . $key . ' = :' . $key . ' ';
+                $sql .= ($first_crit ? 'WHERE' : 'AND') . ' ' . $key . ' = ' . $key . ' ';
                 $params[$key] = $val;
             }
             $first_crit = false;
@@ -741,10 +741,10 @@ class UserManager implements UserProviderInterface
      */
     public function loginAsUser(User $user)
     {
-        if (null !== ($current_token = $this->app['security']->getToken())) {
+        if (null !== ($current_token = $this->app['security.token_storage']->getToken())) {
             $providerKey = method_exists($current_token, 'getProviderKey') ? $current_token->getProviderKey() : $current_token->getKey();
             $token = new UsernamePasswordToken($user, null, $providerKey);
-            $this->app['security']->setToken($token);
+            $this->app['security.token_storage']->setToken($token);
 
             $this->app['user'] = $user;
         }
