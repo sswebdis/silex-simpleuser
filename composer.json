@@ -16,7 +16,7 @@
         "silex/silex": "~2.0",
         "symfony/security": "~3.1",
         "doctrine/dbal": "~2.4",
-        "symfony/twig-bridge": "~3.0",
+        "symfony/twig-bridge": "~3.1",
         "jasongrimes/paginator": "~1.0",
         "swiftmailer/swiftmailer": "~5.3"
     },
