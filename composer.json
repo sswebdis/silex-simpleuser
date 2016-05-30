@@ -14,7 +14,7 @@
     "require": {
         "php": ">=5.3.0",
         "silex/silex": "~2.0",
-        "symfony/security": "~2.3",
+        "symfony/security": "~3.1",
         "doctrine/dbal": "~2.4",
         "symfony/twig-bridge": "~3.0",
         "jasongrimes/paginator": "~1.0",
