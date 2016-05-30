@@ -150,12 +150,12 @@ class UserManager implements UserProviderInterface
         // Test for new columns added in v2.0.
         // If they're missing, throw an exception and explain that migration is needed.
         foreach (array(
-                    $this->getUserColumns('username'),
-                    $this->getUserColumns('isEnabled'),
-                    $this->getUserColumns('confirmationToken'),
-                    $this->getUserColumns('timePasswordResetRequested')
-                ) as $col) {
-            if (!array_key_exists($col, $data)) {
+                     $this->getUserColumns('username'),
+                     $this->getUserColumns('isEnabled'),
+                     $this->getUserColumns('confirmationToken'),
+                     $this->getUserColumns('timePasswordResetRequested')
+                 ) as $col_key => $col) {
+            if (!array_key_exists(str_replace('`', '',$col ), $data)) {
                 throw new \RuntimeException('Internal error: database schema appears out of date. See https://github.com/jasongrimes/silex-simpleuser/blob/master/sql/MIGRATION.md');
             }
         }
@@ -409,10 +409,10 @@ class UserManager implements UserProviderInterface
 
         $users = array();
         foreach ($data as $userData) {
-            if (array_key_exists($userData[$this->getUserColumns('id')], $this->identityMap)) {
+            if (array_key_exists($userData[str_replace('`','' ,$this->getUserColumns('id'))], $this->identityMap)) {
                 $user = $this->identityMap[$userData[$this->getUserColumns('id')]];
             } else {
-                $userData['customFields'] = $this->getUserCustomFields($userData[$this->getUserColumns('id')]);
+                $userData['customFields'] = $this->getUserCustomFields($userData[str_replace('`','' ,$this->getUserColumns('id'))]);
                 $user = $this->hydrateUser($userData);
                 $this->identityMap[$user->getId()] = $user;
             }
