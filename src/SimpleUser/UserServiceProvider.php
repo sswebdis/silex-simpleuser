@@ -2,6 +2,7 @@
 
 namespace SimpleUser;
 
+use Pimple\Container;
 use Silex\Application;
 use Pimple\ServiceProviderInterface;
 use Pimple\ControllerProviderInterface;
@@ -22,7 +23,7 @@ class UserServiceProvider implements ServiceProviderInterface, ControllerProvide
      *
      * @param Application $app An Application instance
      */
-    public function register(Application $app)
+    public function register(Container $app)
     {
         // Default options.
         $app['user.options.default'] = array(
