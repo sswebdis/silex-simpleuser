@@ -5,7 +5,7 @@ namespace SimpleUser;
 use Pimple\Container;
 use Silex\Application;
 use Pimple\ServiceProviderInterface;
-use Pimple\ControllerProviderInterface;
+use Silex\Api\ControllerProviderInterface;
 use Silex\ControllerCollection;
 use Silex\ServiceControllerResolver;
 use Symfony\Component\HttpFoundation\Request;
