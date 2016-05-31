@@ -410,7 +410,7 @@ class UserManager implements UserProviderInterface
         $users = array();
         foreach ($data as $userData) {
             if (array_key_exists($userData[str_replace('`','' ,$this->getUserColumns('id'))], $this->identityMap)) {
-                $user = $this->identityMap[$userData[$this->getUserColumns('id')]];
+                $user = $this->identityMap[$userData[str_replace('`','' ,$this->getUserColumns('id'))]];
             } else {
                 $userData['customFields'] = $this->getUserCustomFields($userData[str_replace('`','' ,$this->getUserColumns('id'))]);
                 $user = $this->hydrateUser($userData);

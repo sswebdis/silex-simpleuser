@@ -11,7 +11,7 @@ use Silex\ServiceControllerResolver;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authorization\Voter\RoleHierarchyVoter;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Security\Core\Security;
 
 class UserServiceProvider implements ServiceProviderInterface, ControllerProviderInterface
 {
@@ -21,7 +21,7 @@ class UserServiceProvider implements ServiceProviderInterface, ControllerProvide
      * This method should only be used to configure services and parameters.
      * It should not get services.
      *
-     * @param Application $app An Application instance
+     * @param Container $app An Application instance
      */
     public function register(Container $app)
     {
@@ -201,14 +201,14 @@ class UserServiceProvider implements ServiceProviderInterface, ControllerProvide
         // It does the same thing as $app['security.last_error'](),
         // except it returns the whole exception instead of just $exception->getMessage()
         $app['user.last_auth_exception'] = $app->protect(function (Request $request) {
-            if ($request->attributes->has(SecurityContextInterface::AUTHENTICATION_ERROR)) {
-                return $request->attributes->get(SecurityContextInterface::AUTHENTICATION_ERROR);
+            if ($request->attributes->has(Security::AUTHENTICATION_ERROR)) {
+                return $request->attributes->get(Security::AUTHENTICATION_ERROR);
             }
 
             $session = $request->getSession();
-            if ($session && $session->has(SecurityContextInterface::AUTHENTICATION_ERROR)) {
-                $exception = $session->get(SecurityContextInterface::AUTHENTICATION_ERROR);
-                $session->remove(SecurityContextInterface::AUTHENTICATION_ERROR);
+            if ($session && $session->has(Security::AUTHENTICATION_ERROR)) {
+                $exception = $session->get(Security::AUTHENTICATION_ERROR);
+                $session->remove(Security::AUTHENTICATION_ERROR);
 
                 return $exception;
             }
