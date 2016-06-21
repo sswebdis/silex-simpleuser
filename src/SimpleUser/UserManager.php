@@ -469,7 +469,7 @@ class UserManager implements UserProviderInterface
             if ($key == 'customFields') {
                 continue;
             } else {
-                $sql .= ($first_crit ? 'WHERE' : 'AND') . ' ' . $key . ' = ' . $key . ' ';
+                $sql .= ($first_crit ? 'WHERE' : 'AND') . ' ' . $key . ' = \'' . $val . '\'';
                 $params[$key] = $val;
             }
             $first_crit = false;
