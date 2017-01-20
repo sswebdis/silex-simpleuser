@@ -423,7 +423,11 @@ class UserController
     public function editAction(Application $app, Request $request, $id)
     {
         $errors = array();
+        if (isset($app['user.options']['available_roles']) && !empty($app['user.options']['available_roles'])){
 
+        }else{
+            $available_roles = array('ROLE_USER', 'ROLE_ADMIN');
+        }
         $user = $this->userManager->getUser($id);
         if (!$user) {
             throw new NotFoundHttpException('No user was found with that ID.');
@@ -469,7 +473,7 @@ class UserController
             'layout_template' => $this->getTemplate('layout'),
             'error' => implode("\n", $errors),
             'user' => $user,
-            'available_roles' => array('ROLE_USER', 'ROLE_ADMIN'),
+            'available_roles' => $available_roles,
             'image_url' => $this->getGravatarUrl($user->getEmail()),
             'customFields' => $customFields,
             'isUsernameRequired' => $this->isUsernameRequired,
