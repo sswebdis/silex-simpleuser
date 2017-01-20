@@ -424,7 +424,7 @@ class UserController
     {
         $errors = array();
         if (isset($app['user.options']['available_roles']) && !empty($app['user.options']['available_roles'])){
-
+            $available_roles = $app['user.options']['available_roles'];
         }else{
             $available_roles = array('ROLE_USER', 'ROLE_ADMIN');
         }
